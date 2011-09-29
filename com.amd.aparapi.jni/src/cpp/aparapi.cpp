@@ -48,6 +48,14 @@ under those regulations, please refer to the U.S. Bureau of Industry and Securit
 #include <CL/cl.h>
 #include <jni.h>
 
+// ///////////////////////////////////////////////////////////////////
+// define this to use only AMD devices
+// keeping this *undefined* will fetch first suitable OpenCL device
+
+// #define APARAPI_AMD_DEVICE
+
+// ///////////////////////////////////////////////////////////////////
+
 #define JNIExceptionChecker(){\
    fprintf(stderr, "line %d\n", __LINE__);\
    if ((jenv)->ExceptionOccurred()) {\
@@ -414,9 +422,15 @@ class JNIContext{
                      if (isVerbose()){
                         fprintf(stderr, "platform %d %s\n", i, pbuf); 
                      }
+
+#ifdef APARAPI_AMD_DEVICE
                      if (!strcmp(pbuf, "Advanced Micro Devices, Inc.")) {
                         platform = platforms[i];
                      }
+#else
+                     platform = platforms[i];
+#endif
+
                   }
 
                   // Get the # of devices
