@@ -15,6 +15,11 @@ but currently it's way too early for this.
 
 Current status
 ==============
+
+29-09-2011: Simple modification of C++ code was enough to run on non-AMD devices. Version currently avaliable in the repo
+was tested using Intel OpenCL 1.1 SDK on Windows 7 64-bit and it more or less works, but still some small changes to build.xml
+and build.properties are needed to complie without issues.
+
 28-09-2011: I have a working MacOSX version (tested on CPU only) of Aprapi locally. I need to work out some
 Ant issues and I will publish it here soon.
 
