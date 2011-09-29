@@ -40,12 +40,22 @@ under those regulations, please refer to the U.S. Bureau of Industry and Securit
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#ifndef __APPLE__
 #include <malloc.h>
+#endif
+
 #include <sys/types.h>
 #ifndef _WIN32
 #include <unistd.h>
 #endif
+
+#ifndef __APPLE__
 #include <CL/cl.h>
+#else
+#include <cl.h>
+#endif
+
 #include <jni.h>
 
 // ///////////////////////////////////////////////////////////////////
