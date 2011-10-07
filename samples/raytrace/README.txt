@@ -6,12 +6,9 @@ OpenCL code can't be generated due to:
 
 - usage of static methods
 - usage of "new" operator in the kernel
-- usgae of Java collections
+- some other minor limitations...
 
-While the third problem can be easily eliminated by rewriting the code to use
-plain arrays, the first two need a bit more work. I hope to add some raw 
-support for static calls into Aparapi core, and think about "new" support
-in some way.
-
-So for now it is only possible to run this example in SEQ or JTP modes.
+So for now it is only possible to run this example in SEQ or JTP modes, but
+there is ongoing effort to add missing features to Aparapi so that this
+example could run on GPU.
 
