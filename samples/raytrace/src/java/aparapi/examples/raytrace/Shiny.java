@@ -7,24 +7,31 @@ public class Shiny extends Surface {
 		return _instance;
 	}
 
+	private Color difuse;
+	private Color specular;
+	private double reflect;
+	
 	public Shiny() {
 		Roughness = 50;
+		difuse = Color.White;
+		specular = Color.Gray;
+		reflect = .6;
 
 	}
 
 	@Override
 	public Color Diffuse(Vector v) {
-		return Color.Make(1, 1, 1);
+		return difuse;
 	}
 
 	@Override
 	public Color Specular(Vector v) {
-		return Color.Make(.5, .5, .5);
+		return specular;
 	}
 
 	@Override
 	public double Reflect(Vector v) {
-		return .6;
+		return reflect;
 	}
 
 }

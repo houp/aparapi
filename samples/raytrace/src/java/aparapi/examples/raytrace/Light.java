@@ -6,7 +6,6 @@ class Light {
     
     public Light(Vector pos, Color c) {
     	Pos = pos;
-    	Color =c;
-
+    	Color =c ;
     }
 }

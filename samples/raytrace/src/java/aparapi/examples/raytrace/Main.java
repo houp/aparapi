@@ -16,9 +16,9 @@ public class Main {
 
 		JFrame frame = new JFrame("Raytracer");
 
-		final int width = 500;
+		final int width = 750;
 
-		final int height = 500;
+		final int height = 750;
 
 		final BufferedImage image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB);

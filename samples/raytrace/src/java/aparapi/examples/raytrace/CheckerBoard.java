@@ -2,7 +2,7 @@ package aparapi.examples.raytrace;
 
 public class CheckerBoard extends Surface {
 	private static final CheckerBoard _instance = new CheckerBoard();
-
+	private Color specular = Color.White;
 	
 	public static CheckerBoard getInstance() {
 		return _instance;
@@ -14,13 +14,12 @@ public class CheckerBoard extends Surface {
 
 	@Override
 	public Color Diffuse(Vector pos) {
-		return ((Math.floor(pos.Z) + Math.floor(pos.X)) % 2 != 0) ? Color.Make(
-				1, 1, 1) : Color.Make(0, 0, 0);
+		return ((Math.floor(pos.Z) + Math.floor(pos.X)) % 2 != 0) ? Color.White : Color.Black;
 	}
 
 	@Override
 	public Color Specular(Vector pos) {
-		return Color.Make(1, 1, 1);
+		return specular;
 	}
 
 	@Override

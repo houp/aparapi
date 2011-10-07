@@ -23,18 +23,19 @@ class Sphere extends SceneObject {
 		double v = Vector.Dot(eo, ray.Dir);
 		double dist;
 		if (v < 0) {
-			dist = 0;
+			return null;
 		} else {
-			double disc = Math.pow(Radius, 2)
-					- (Vector.Dot(eo, eo) - Math.pow(v, 2));
+			double disc = Math.pow(Radius, 2) - (Vector.Dot(eo, eo) - Math.pow(v, 2));
 			dist = disc < 0 ? 0 : v - Math.sqrt(disc);
 		}
-		if (dist == 0)
-			return null;
+		
+		if(dist==0) return null;
+		
 		ISect result = new ISect();
 		result.Thing = this;
 		result.Ray = ray;
 		result.Dist = dist;
+		
 		return result;
 
 	}
