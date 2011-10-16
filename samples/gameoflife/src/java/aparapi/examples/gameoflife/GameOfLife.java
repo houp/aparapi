@@ -1,26 +1,21 @@
-package aparapi.examples.gameoflife;
+package aparapi.examples;
 import com.amd.aparapi.Kernel;
 
 public class GameOfLife extends Kernel {
 
-	private int[] result;
-	private int[] initial;
-	private int width;
-	private int height;
-	private int size;
-	public GameOfLife(int width, int height, int[] initial, int[] result) {
+	private final byte[] board;
+	private final int width;
+	private final int size;
+	
+	public GameOfLife(int width, int height, byte[] board) {
 		this.width = width;
-		this.height = height;
-		this.initial = initial;
 		this.size = width*height;
-		this.result = result;
+		this.board = board;
 	}
 	
-	
-	private int getValue(int pos) {
-		if(pos>=0 && pos < size) return initial[pos];
-		if(pos<0) return initial[size-1 - (abs(pos)%size)];
-		return initial[pos%size];
+	private byte getValue(int pos) {
+		if(pos>=0) return (byte)(board[pos%size] & 1);
+		else return (byte)(board[size-1 - (abs(pos)%size)] & 1);
 	}
 	
 	@Override public void run() {
@@ -30,8 +25,7 @@ public class GameOfLife extends Kernel {
 		getValue(pos-width-1) + getValue(pos-width) + getValue(pos-width+1) +
 		getValue(pos+width-1) + getValue(pos+width) + getValue(pos+width+1);
 		
-		if(sum!=3 && sum!=2) result[pos] = 0;
-		else result[pos] = 1;
+		if (sum==3 || sum==2) board[pos] += 2;
 	}
 	
 }

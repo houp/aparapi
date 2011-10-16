@@ -1,12 +1,11 @@
-package aparapi.examples.gameoflife;
+package aparapi.examples;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.util.Random;
+import java.awt.image.DataBufferByte;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -17,13 +16,13 @@ public class Main {
 
 		JFrame frame = new JFrame("Game of Life");
 
-		final int width = 750;
+		final int width = 500;
 
-		final int height = 750;
+		final int height = width;
 
 	
 		final BufferedImage image = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_RGB);
+				BufferedImage.TYPE_BYTE_GRAY);
 
 		@SuppressWarnings("serial")
 		JComponent viewer = new JComponent() {
@@ -42,28 +41,21 @@ public class Main {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
-		// Extract the underlying RGB buffer from the image.
-		// Pass this to the kernel so it operates directly on the RGB buffer of
-		// the image
-		final int[] imageRgb = ((DataBufferInt) image.getRaster()
+		
+		final byte[] imageData = ((DataBufferByte) image.getRaster()
 				.getDataBuffer()).getData();
 
-		final int[] initial = new int[width * height];
-		final int[] result = new int[width * height];
-		int[] current = initial;
-		int[] back = result;
-		int[] tmp = null;
+		final byte[] board = new byte[width * height];
 
 		for (int i = 0; i < width * height; i++) {
-			initial[i] = 0;
+			board[i] = 0;
 		}
 		
 		for(int i=0;i<10;i++) {
-			initial[i+width*(height/2)+((width/2)-5)] = 1;
+			board[i+width*(height/2)+((width/2)-5)] = 1;
 		}
 		
-		GameOfLife game = new GameOfLife(width, height, current, back);
+		GameOfLife game = new GameOfLife(width, height, board);
 
 		// Window listener to dispose Kernel resources on user exit.
 		frame.addWindowListener(new WindowAdapter() {
@@ -81,19 +73,15 @@ public class Main {
 			game.execute(width * height);
 
 			for (int i = 0; i < width * height; i++) {
-				imageRgb[i] = back[i] * 0xffffff;
+				board[i] /= 2;
+				imageData[i] = (byte)(board[i]*255);
 			}
-
-			tmp = current;
-			current = back;
-			back = tmp;
-			game = new GameOfLife(width, height, current, back);
-
+			
 			viewer.repaint();
 			frames++;
 			time += System.currentTimeMillis() - t1;
 			
-			if(time > 1000) {
+			if(time > 2000) {
 				frame.setTitle("Game of Life - fps: "+(frames*1000.0)/(time));
 				time = 0;
 				frames = 0;
