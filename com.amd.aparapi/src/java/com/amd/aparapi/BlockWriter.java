@@ -656,7 +656,9 @@ abstract class BlockWriter{
             writeThisRef();
          }
       }
+      
       int argc = _methodEntry.getStackConsumeCount();
+      
       write(_methodEntry.getNameAndTypeEntry().getNameUTF8Entry().getUTF8());
       write("(");
 

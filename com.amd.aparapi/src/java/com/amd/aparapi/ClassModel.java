@@ -2089,6 +2089,10 @@ class ClassModel{
          return (methodAccessFlags);
       }
 
+      public boolean isStatic() {
+    	  return (methodAccessFlags & 0x0008) > 0;
+      }
+      
       AttributePool getAttributePool() {
          return (methodAttributePool);
       }

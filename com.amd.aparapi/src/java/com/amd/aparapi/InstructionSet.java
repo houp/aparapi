@@ -2919,6 +2919,7 @@ class InstructionSet{
       @Override int getStackProduceCount() {
          return (getConstantPoolMethodEntry().getStackProduceCount());
       }
+
    }
 
    static class I_INVOKEVIRTUAL extends Index16 implements VirtualMethodCall{

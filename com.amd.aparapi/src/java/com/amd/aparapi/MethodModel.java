@@ -119,6 +119,8 @@ class MethodModel{
    private boolean methodIsGetter;
 
    private boolean methodIsSetter;
+   
+   
 
    // Only setters can use putfield
    private boolean usesPutfield;
@@ -245,27 +247,31 @@ class MethodModel{
          if ((!Config.enablePUTSTATIC) && instruction instanceof I_PUTSTATIC) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.PUTFIELD);
          }
-         if ((!Config.enableINVOKESTATIC) && instruction instanceof I_INVOKESTATIC) {
-            throw new ClassParseException(instruction, ClassParseException.TYPE.INVOKESTATIC);
-         }
+         
          if ((!Config.enableINVOKEINTERFACE) && instruction instanceof I_INVOKEINTERFACE) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.INVOKEINTERFACE);
          }
+         
          if ((!Config.enableGETSTATIC) && instruction instanceof I_GETSTATIC) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.GETSTATIC);
          }
+         
          if ((!Config.enableATHROW) && instruction instanceof I_ATHROW) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.ATHROW);
          }
+         
          if ((!Config.enableMONITOR) && ((instruction instanceof I_MONITORENTER) || (instruction instanceof I_MONITOREXIT))) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.SYNCHRONIZE);
          }
+         
          if ((!Config.enableNEW) && instruction instanceof New) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.NEW);
          }
+         
          if (instruction instanceof I_CALOAD || instruction instanceof I_CASTORE) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.CHARARRAY);
          }
+         
          if (instruction instanceof I_AASTORE) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.ARRAYALIAS);
          }
@@ -280,6 +286,7 @@ class MethodModel{
          if ((!Config.enableSWITCH) && (instruction instanceof I_LOOKUPSWITCH || instruction instanceof I_TABLESWITCH)) {
             throw new ClassParseException(instruction, ClassParseException.TYPE.SWITCH);
          }
+         
          if (!Config.enableMETHODARRAYPASSING) {
             if (instruction instanceof MethodCall) {
                MethodCall methodCall = (MethodCall) instruction;
@@ -1499,9 +1506,9 @@ class MethodModel{
          deoptimizeReverseBranches();
 
          // pass #4
-
          foldExpressions();
-
+         
+         
          // Accessor conversion only works on member object arrays
          if (entrypoint != null && _method.getClassModel() != entrypoint.getClassModel()) {
             if (logger.isLoggable(Level.FINE)) {
